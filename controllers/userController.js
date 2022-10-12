@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/userModel");
+const userModel = require('../models/userModel');
 
 // create token
 const createToken = (_id) => {
@@ -31,9 +32,8 @@ const signupUSer = async (req, res) => {
             profile_image
         );
 
-        const token = createToken(user._id);
 
-        res.status(200).json({ name, email, token });
+        res.status(200).json({ name, email });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -46,13 +46,58 @@ const loginUser = async (req, res) => {
     try {
         const user = await UserModel.login(email, password);
 
-        res.status(200).json({ email });
+        const token = createToken(user._id);
+        res.status(200).json({ email, token });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 }
+
+// get all user
+const allUser = async (req, res) => {
+    try {
+        const users = await UserModel.find({});
+        res.status(200).json({ users, message: "These are all users" });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+
+// update user info
+const updateUser = async (req, res) => {
+
+    const { id } = req.params;
+    try {
+        const user = await UserModel.findOneAndUpdate(
+            { _id: id },
+            {
+                $set: {
+
+                    email: req.body?.email,
+                    password: req.body?.password,
+                    name: req.body?.name,
+                    mobile_number: req.body?.mobile_number,
+                    about: req.body?.about,
+                    profile_image: req.body?.profile_image,
+                },
+            },
+            {
+                new: true,
+                upsert: true,
+            }
+        );
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+
 // export modules
 module.exports = {
     signupUSer,
-    loginUser
+    loginUser,
+    allUser,
+    updateUser
 }

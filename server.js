@@ -13,7 +13,7 @@ app.use(cors())
 app.use(express.json());
 
 // routes for user
-app.use("/api/auth", userRoutes);
+app.use("/api", userRoutes);
 
 // route
 app.get("/", (req, res) => {
