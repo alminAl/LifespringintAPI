@@ -1,5 +1,5 @@
 const express = require('express');
-const { signupUSer, loginUser, allUser, updateUser } = require('../controllers/userController');
+const { signupUSer, loginUser, allUser, updateUser, changePassword } = require('../controllers/userController');
 // const userRequireAuth = require('../middlewares/userRequireAuth');
 const validation = require('../middlewares/validationMiddleware');
 const { userSignupValidation, userLoginValidation } = require('../validations/userValidation');
@@ -21,6 +21,7 @@ router.get('/users', allUser);
 // update user
 router.patch("/user/profile/:id", validation(userLoginValidation), updateUser)
 
-
+// change password
+router.post('/user/change_password/:id', changePassword);
 // export modules
 module.exports = router;

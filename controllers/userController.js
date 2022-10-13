@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/userModel");
-const userModel = require('../models/userModel');
 
 // create token
 const createToken = (_id) => {
@@ -10,6 +9,17 @@ const createToken = (_id) => {
         expiresIn: "3d"
     });
 }
+
+// secure password method
+const securePassword = async (password) => {
+    try {
+        const passwordHash = await bcrypt.hash(password, 10);
+        return passwordHash;
+    } catch (error) {
+        res.status(400).send({ error: error.message })
+    }
+}
+
 
 // signup controller
 const signupUSer = async (req, res) => {
@@ -75,7 +85,6 @@ const updateUser = async (req, res) => {
                 $set: {
 
                     email: req.body?.email,
-                    password: req.body?.password,
                     name: req.body?.name,
                     mobile_number: req.body?.mobile_number,
                     about: req.body?.about,
@@ -94,10 +103,41 @@ const updateUser = async (req, res) => {
 };
 
 
+// change password
+const changePassword = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const password = req.body.password;
+
+        const newPassword = await securePassword(password);
+
+        const user = await UserModel.findOneAndUpdate(
+            { _id: id },
+            {
+                $set: {
+                    password: newPassword
+
+                },
+            },
+            {
+                new: true,
+                upsert: true,
+            }
+        );
+        res.status(200).json({ user, message: "Password change successfully" });
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+
 // export modules
 module.exports = {
     signupUSer,
     loginUser,
     allUser,
-    updateUser
+    updateUser,
+    changePassword
 }
