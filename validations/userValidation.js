@@ -17,7 +17,23 @@ const userLoginValidation = yup.object({
     password: yup.string().min(6).max(10).required(),
 });
 
+// user update validation
+const userUpdateValidation = yup.object({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    mobile_number: yup.number().required(),
+    about: yup.string().max(100),
+})
+
+// change password validation
+const passwordValidation = yup.object({
+    password: yup.string().min(6).max(10).required(),
+})
+
+
 module.exports = {
     userSignupValidation,
-    userLoginValidation
+    userLoginValidation,
+    userUpdateValidation,
+    passwordValidation
 }

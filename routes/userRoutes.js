@@ -1,8 +1,8 @@
 const express = require('express');
 const { signupUSer, loginUser, allUser, updateUser, changePassword } = require('../controllers/userController');
-// const userRequireAuth = require('../middlewares/userRequireAuth');
+const userRequireAuth = require('../middlewares/userRequireAuth');
 const validation = require('../middlewares/validationMiddleware');
-const { userSignupValidation, userLoginValidation } = require('../validations/userValidation');
+const { userSignupValidation, userLoginValidation, userUpdateValidation, passwordValidation } = require('../validations/userValidation');
 
 
 // express router
@@ -19,9 +19,11 @@ router.post("/auth/login", validation(userLoginValidation), loginUser);
 router.get('/users', allUser);
 
 // update user
-router.patch("/user/profile/:id", validation(userLoginValidation), updateUser)
+router.patch("/user/profile/:id", userRequireAuth, validation(userUpdateValidation), updateUser)
 
 // change password
-router.post('/user/change_password/:id', changePassword);
+router.post('/user/change_password/:id', userRequireAuth, validation(passwordValidation), changePassword);
+
+
 // export modules
 module.exports = router;
