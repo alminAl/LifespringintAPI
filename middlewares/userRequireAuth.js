@@ -17,11 +17,11 @@ const userRequireAuth = async (req, res, next) => {
 
             const token = authorization.split(" ")[1];
             const { _id } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            req.user = await UserModel.findById({ _id });
+            req.user = await UserModel.findById({ _id }).select("_id")
             next();
 
         } catch (error) {
-
+            // console.error(error.message)
             res.status(401).send({ message: "Unauthorized User" });
         }
     }

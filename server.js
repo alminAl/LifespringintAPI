@@ -3,7 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
 
-const userRoutes = require("./routes/userRoutes")
+const userRoutes = require("./routes/userRoutes");
+const userProfileRoutes = require("./routes/userProfileRoutes");
 
 // express app
 const app = express();
@@ -12,13 +13,16 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
-// routes for user
-app.use("/api", userRoutes);
+
 
 // route
 app.get("/", (req, res) => {
   res.status(200).json({ api: "Life Spring API 🌳" });
 });
+
+// routes for user
+app.use("/api/auth", userRoutes);
+app.use("/api/user/profile", userProfileRoutes);
 
 // connect to DB
 mongoose

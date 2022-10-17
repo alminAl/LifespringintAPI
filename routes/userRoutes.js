@@ -1,8 +1,8 @@
 const express = require('express');
-const { signupUSer, loginUser, allUser, updateUser, changePassword } = require('../controllers/userController');
-const userRequireAuth = require('../middlewares/userRequireAuth');
+const { signupUSer, loginUser, } = require('../controllers/userController');
+
 const validation = require('../middlewares/validationMiddleware');
-const { userSignupValidation, userLoginValidation, userUpdateValidation, passwordValidation } = require('../validations/userValidation');
+const { userSignupValidation, userLoginValidation } = require('../validations/userValidation');
 
 
 // express router
@@ -10,19 +10,10 @@ const router = express();
 
 
 // signup user 
-router.post("/auth/signup", validation(userSignupValidation), signupUSer);
+router.post("/signup", validation(userSignupValidation), signupUSer);
 
 // login user 
-router.post("/auth/login", validation(userLoginValidation), loginUser);
-
-// // get All user
-router.get('/users', allUser);
-
-// update user
-router.patch("/user/profile/:id", userRequireAuth, validation(userUpdateValidation), updateUser)
-
-// change password
-router.post('/user/change_password/:id', userRequireAuth, validation(passwordValidation), changePassword);
+router.post("/login", validation(userLoginValidation), loginUser);
 
 
 // export modules
