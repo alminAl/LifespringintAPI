@@ -17,7 +17,7 @@ const userSchema = new Schema({
         require: true
     },
     mobile_number: {
-        type: Number,
+        type: String,
         require: true
     },
     isAdmin: {
@@ -34,7 +34,7 @@ const userSchema = new Schema({
     },
     profile_image: {
         type: String,
-        require: true
+        require: false
     }
 });
 

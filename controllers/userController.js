@@ -70,8 +70,8 @@ const loginUser = async (req, res) => {
 const userProfile = async (req, res) => {
   try {
     const user_id = req.user;
-    const users = await UserModel.findById(user_id).select("-password");
-    res.status(200).json({ users, message: "These are all users" });
+    const userProfile = await UserModel.findById(user_id).select("-password");
+    res.status(200).json(userProfile);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

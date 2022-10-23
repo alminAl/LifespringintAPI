@@ -5,7 +5,7 @@ const userSignupValidation = yup.object({
     name: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).max(10).required(),
-    mobile_number: yup.number().required(),
+    mobile_number: yup.string().required(),
     about: yup.string().max(100),
 
 })
@@ -19,9 +19,9 @@ const userLoginValidation = yup.object({
 
 // user update validation
 const userUpdateValidation = yup.object({
-    name: yup.string().required(),
-    email: yup.string().email().required(),
-    mobile_number: yup.number().required(),
+    name: yup.string(),
+    email: yup.string().email(),
+    mobile_number: yup.string(),
     about: yup.string().max(100),
 })
 
