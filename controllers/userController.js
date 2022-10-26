@@ -57,15 +57,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-// get all user
-// const allUser = async (req, res) => {
-//   try {
-//     const users = await UserModel.find({});
-//     res.status(200).json({ users, message: "These are all users" });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
 
 const userProfile = async (req, res) => {
   try {

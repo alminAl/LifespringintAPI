@@ -14,7 +14,7 @@ const router = express();
 router.post("/signup", validation(userSignupValidation), signupUSer);
 
 // signup user 
-router.post("/signup", validation(userSignupValidation), signupUSer);
+// router.post("/signup", validation(userSignupValidation), signupUSer);
 
 // login user 
 router.post("/login", validation(userLoginValidation), loginUser);
