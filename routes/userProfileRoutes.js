@@ -8,12 +8,13 @@ const { userUpdateValidation, passwordValidation } = require('../validations/use
 
 // express router
 const userProfileRoutes = express();
+
 userProfileRoutes.use(userRequireAuth)
 
 // // get user
 userProfileRoutes.get('/', userProfile);
 // update user
-userProfileRoutes.patch("/", validation(userUpdateValidation), updateUser)
+userProfileRoutes.patch("/", validation(userUpdateValidation), updateUser);
 // change password
 userProfileRoutes.post('/change_password/', validation(passwordValidation), changePassword);
 

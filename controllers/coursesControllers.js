@@ -28,10 +28,9 @@ const createCourse = async (req, res) => {
 const getCourses = async (req, res) => {
   try {
     const courses = await CoursesModel.find({});
-    res.status(200).json({
-      courses,
-      message: "Course gets successfully!",
-    });
+    res.status(200).json(
+      courses
+    );
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -39,16 +38,15 @@ const getCourses = async (req, res) => {
 
 // get a course
 const getCourse = async (req, res) => {
-  const { _id } = req.params;
+  const { id } = req.params;
   try {
-    const course = await CoursesModel.findById({ _id });
+    const course = await CoursesModel.findById({ _id: id });
     if (!course) {
       return res.status(400).json({ error: "Not such a Course." });
     } else {
-      res.status(200).json({
+      res.status(200).json(
         course,
-        message: "Course gets successfully!",
-      });
+      );
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -57,10 +55,10 @@ const getCourse = async (req, res) => {
 
 // update a course
 const updateCourse = async (req, res) => {
-  const { _id } = req.params;
+  const { id } = req.params;
   try {
     const course = await CoursesModel.findOneAndUpdate(
-      { _id },
+      { _id: id },
       {
         $set: {
           create_by: req.body?.create_by,
@@ -80,10 +78,9 @@ const updateCourse = async (req, res) => {
     if (!course) {
       return res.status(400).json({ error: "Not such a Course." });
     } else {
-      res.status(200).json({
+      res.status(200).json(
         course,
-        message: "Course update successfully!",
-      });
+      );
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -92,16 +89,15 @@ const updateCourse = async (req, res) => {
 
 // delete a Course
 const deleteCourse = async (req, res) => {
-  const { _id } = req.params;
+  const { id } = req.params;
   try {
-    const course = await CoursesModel.findOneAndDelete({ _id });
+    const course = await CoursesModel.findOneAndDelete({ _id: id });
     if (!course) {
       return res.status(400).json({ error: "Not such a Course." });
     } else {
-      res.status(200).json({
+      res.status(200).json(
         course,
-        message: "Course deleted successfully!",
-      });
+      );
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

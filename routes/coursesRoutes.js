@@ -21,7 +21,7 @@ router.post(
   validation(coursesValidation),
   createCourse
 );
-router.get("/", getCourses);
+router.get("/", userRequireAuth, isPsychology, getCourses);
 router.get("/:id", userRequireAuth, getCourse);
 router.put(
   "/:id",
@@ -29,6 +29,6 @@ router.put(
   validation(coursesValidation),
   updateCourse
 );
-router.delete("/:id", userRequireAuth, deleteCourse);
+router.delete("/:id", userRequireAuth, isPsychology, deleteCourse);
 
 module.exports = router;

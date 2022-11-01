@@ -76,7 +76,7 @@ const updateUser = async (req, res) => {
     const user = await UserModel.findOneAndUpdate(
       user_id,
       {
-        email,
+
         name,
         mobile_number,
         about,
