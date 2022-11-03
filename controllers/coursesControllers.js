@@ -4,10 +4,11 @@ const CoursesModel = require("../models/coursesModel");
 const createCourse = async (req, res) => {
   const { title, description, duration, course_type, videos, cover_photo } =
     req.body;
+  console.log(req.body);
   try {
     const user = req.user;
     const course = await CoursesModel.create({
-      create_by: user,
+      create_by: user._id,
       title,
       description,
       duration,
@@ -28,9 +29,7 @@ const createCourse = async (req, res) => {
 const getCourses = async (req, res) => {
   try {
     const courses = await CoursesModel.find({});
-    res.status(200).json(
-      courses
-    );
+    res.status(200).json({courses});
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -40,9 +39,7 @@ const getCourses = async (req, res) => {
 const getAllCourses = async (req, res) => {
   try {
     const courses = await CoursesModel.find({});
-    res.status(200).json(
-      courses
-    );
+    res.status(200).json(courses);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -56,9 +53,7 @@ const getCourse = async (req, res) => {
     if (!course) {
       return res.status(400).json({ error: "Not such a Course." });
     } else {
-      res.status(200).json(
-        course,
-      );
+      res.status(200).json(course);
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -90,9 +85,7 @@ const updateCourse = async (req, res) => {
     if (!course) {
       return res.status(400).json({ error: "Not such a Course." });
     } else {
-      res.status(200).json(
-        course,
-      );
+      res.status(200).json(course);
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -107,9 +100,7 @@ const deleteCourse = async (req, res) => {
     if (!course) {
       return res.status(400).json({ error: "Not such a Course." });
     } else {
-      res.status(200).json(
-        course,
-      );
+      res.status(200).json(course);
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -23,7 +23,7 @@ router.post(
   createCourse
 );
 router.get("/", userRequireAuth, isPsychology, getCourses);
-router.get("/all",  getAllCourses);
+router.get("/all", getAllCourses);
 router.get("/:id", userRequireAuth, getCourse);
 router.put(
   "/:id",
